@@ -3,7 +3,10 @@ import { DIGIT, OPERATION } from '../types';
 import { calculate, isOperation } from '../utils';
 import { CONST } from '../utils/const';
 
-type STATE = typeof initialState;
+type STATE = {
+  total: string;
+  memory: string[];
+};
 type ACTION = ACTION_DIGIT | ACTION_MODIFIER | ACTION_OPERATION;
 type ACTION_DIGIT = {
   type: 'digit';
@@ -37,7 +40,7 @@ export function CalculatorProvider({
   );
 }
 
-const reducer = (state: typeof initialState, action: ACTION) => {
+const reducer = (state: STATE, action: ACTION) => {
   const { total, memory } = state;
   switch (action.type) {
     case 'digit': {
@@ -83,7 +86,7 @@ const reducer = (state: typeof initialState, action: ACTION) => {
   }
 };
 
-const initialState = {
+const initialState: STATE = {
   total: '0',
-  memory: [] as string[],
+  memory: [],
 };
