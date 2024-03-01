@@ -79,7 +79,7 @@ describe('예외 대상이 되는 경우', () => {
           await userEvent.click($);
         }
 
-        expect($total.textContent).toBe('Infinity');
+        expect($total.textContent).toBe('오류');
       });
     }
   );

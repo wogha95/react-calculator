@@ -3,6 +3,6 @@ export const CONST = {
   OPERATION_LIST: ['/', 'X', '-', '+', '='],
   MODIFIER: 'AC',
   INITIAL_TOTAL: '0',
-  INFINITY: 'Infinity',
+  INFINITY: '오류',
   DIGIT_MAX_LENGTH: 3,
 } as const;
