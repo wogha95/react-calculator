@@ -3,13 +3,45 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 
 describe.each([
-  { a: '6', b: '2', operation: '+', operationKo: '덧셈', total: '8' },
-  { a: '6', b: '2', operation: '-', operationKo: '뺄셈', total: '4' },
-  { a: '6', b: '2', operation: 'X', operationKo: '곱셈', total: '12' },
-  { a: '6', b: '2', operation: '/', operationKo: '나눗셈', total: '3' },
+  {
+    a: '6',
+    b: '2',
+    operation: '+',
+    operationKo: '덧셈',
+    total: '8',
+    operation2: '-',
+    total2: '4',
+  },
+  {
+    a: '6',
+    b: '2',
+    operation: '-',
+    operationKo: '뺄셈',
+    total: '4',
+    operation2: '+',
+    total2: '8',
+  },
+  {
+    a: '6',
+    b: '2',
+    operation: 'X',
+    operationKo: '곱셈',
+    total: '12',
+    operation2: '/',
+    total2: '3',
+  },
+  {
+    a: '6',
+    b: '2',
+    operation: '/',
+    operationKo: '나눗셈',
+    total: '3',
+    operation2: 'X',
+    total2: '12',
+  },
 ])(
   '2개의 숫자에 대해 $operationKo이(가) 가능하다.',
-  ({ a, b, operation, total }) => {
+  ({ a, b, operation, operation2, total, total2 }) => {
     beforeEach(() => {
       render(<App />);
     });
@@ -66,6 +98,25 @@ describe.each([
       await userEvent.click($calculation);
 
       expect($total.textContent).toBe(total);
+    });
+
+    it(`[${a}, ${operation}, ${operation2}, ${b}, =]를 순서대로 클릭하면 ${total2}이 나타난다.`, async () => {
+      const $total = await screen.findByRole('heading');
+      const $digitA = await screen.findByRole('button', { name: a });
+      const $digitB = await screen.findByRole('button', { name: b });
+      const $operation = await screen.findByRole('button', { name: operation });
+      const $operation2 = await screen.findByRole('button', {
+        name: operation2,
+      });
+      const $calculation = await screen.findByRole('button', { name: '=' });
+
+      await userEvent.click($digitA);
+      await userEvent.click($operation);
+      await userEvent.click($operation2);
+      await userEvent.click($digitB);
+      await userEvent.click($calculation);
+
+      expect($total.textContent).toBe(total2);
     });
   }
 );
