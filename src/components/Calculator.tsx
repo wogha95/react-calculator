@@ -1,14 +1,12 @@
+import { Digits, Modifier, Operations } from '.';
 import { useCalculatorState } from '../hooks/useCalculatorContext';
-import Digits from './Digits';
-import Modifier from './Modifier';
-import Operations from './Operations';
 
 export default function Calculator() {
-  const state = useCalculatorState();
+  const { total } = useCalculatorState();
 
   return (
     <div className="calculator">
-      <h1 id="total">{state.total}</h1>
+      <h1 id="total">{total}</h1>
       <Digits />
       <Modifier />
       <Operations />
