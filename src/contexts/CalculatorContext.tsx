@@ -62,6 +62,12 @@ const reducer = (state: STATE, action: ACTION) => {
       return initialState;
     case 'operation': {
       if (action.param === '=') {
+        if (memory.length === 1) {
+          return {
+            total,
+            memory,
+          };
+        }
         const [leftNumber, operation] = memory;
         const rightNumber = total;
         const newTotal = calculate(
@@ -75,9 +81,16 @@ const reducer = (state: STATE, action: ACTION) => {
         };
       }
 
+      if (isOperation(total)) {
+        return {
+          total: action.param,
+          memory: [memory[0], action.param],
+        };
+      }
+
       return {
         total: action.param,
-        memory: [state.total, action.param],
+        memory: [total, action.param],
       };
     }
     default: {
